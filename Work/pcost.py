@@ -1,3 +1,5 @@
+import csv
+
 def portfolio_cost(filename):
     total_cost = 0
 
@@ -13,10 +15,35 @@ def portfolio_cost(filename):
 
     return total_cost
 
+def portfolio_cost_csv_library(filename):
+    total_cost = 0
+    f = open(filename)
+    rows = csv.reader(f)
+    headers = next(rows)
 
-cost = portfolio_cost('Data/portfolio.csv')
+    for row in rows:
+        try:
+            name, shares, cost = row
+            print(f"name: {name}, shares: {shares}, cost: {cost}")
+            total_cost += (float(cost) * float(shares))
+        except ValueError:
+            print("Missing field!") 
+
+
+    f.close()
+    return total_cost
+
+
+# cost = portfolio_cost('Data/portfolio.csv')
+# print(f"Total cost to purchase all of the shares: {cost}")
+
+# cost = portfolio_cost('Data/missing.csv')
+# print(f"Total cost to purchase all of the shares: {cost}")
+
+
+cost = portfolio_cost_csv_library('Data/portfolio.csv')
 print(f"Total cost to purchase all of the shares: {cost}")
 
-cost = portfolio_cost('Data/missing.csv')
+cost = portfolio_cost_csv_library('Data/missing.csv')
 print(f"Total cost to purchase all of the shares: {cost}")
 
