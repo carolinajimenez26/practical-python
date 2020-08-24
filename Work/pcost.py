@@ -24,9 +24,9 @@ def portfolio_cost_csv_library(filename):
 
     for lineno, row in enumerate(rows):
         try:
-            name, shares, cost = row
-            print(f"name: {name}, shares: {shares}, cost: {cost}")
-            total_cost += (float(cost) * float(shares))
+            record = dict(zip(headers, row))
+            print(record)
+            total_cost += (float(record["price"]) * float(record["shares"]))
         except ValueError:
             print(f"Row {lineno}: Couldn\'t convert: {row}")
 
