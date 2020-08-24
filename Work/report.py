@@ -9,11 +9,7 @@ def read_portfolio(filename):
 
     for row in rows:
         try:
-            holding = {
-                "name": row[0],
-                "shares": int(row[1]),
-                "price": float(row[2])
-            }
+            holding = dict(zip(headers, row))
             portfolio.append(holding)
             print(f"holding: {holding}")
         except ValueError:
@@ -42,9 +38,9 @@ def make_report(portfolio, prices):
     report = []
 
     for stock in portfolio:
-        current_price = prices[stock['name']]
-        change = current_price - stock['price']
-        summary = (stock['name'], stock['shares'], current_price, change)
+        current_price = float(prices[stock['name']])
+        change = current_price - float(stock['price'])
+        summary = (stock['name'], int(stock['shares']), current_price, change)
         report.append(summary)
     return report
 
@@ -56,14 +52,14 @@ prices    = read_prices('./Data/prices.csv')
 # Calculate the total cost of the portfolio
 total_cost = 0.0
 for s in portfolio:
-    total_cost += s['shares']*s['price']
+    total_cost += int(s['shares']) * float(s['price'])
 
 print('Total cost', total_cost)
 
 # Compute the current value of the portfolio
 total_value = 0.0
 for s in portfolio:
-    total_value += s['shares']*prices[s['name']]
+    total_value += int(s['shares']) * float(prices[s['name']])
 
 print('Current value', total_value)
 print('Gain', total_value - total_cost)
