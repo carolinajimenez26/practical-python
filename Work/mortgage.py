@@ -15,7 +15,7 @@ while principal > 0:
     
     total_paid += payment
     current_month += 1
-    print(current_month, round(total_paid,2), round(principal, 2))
+    print(f"{current_month}, {round(total_paid,2)}, {round(principal, 2)}")
     
-print('Total paid', round(total_paid, 2))
-print('Months', current_month - 1)
+print(f"Total paid {round(total_paid, 2)}")
+print(f"Months {current_month - 1}")
