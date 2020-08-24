@@ -22,13 +22,13 @@ def portfolio_cost_csv_library(filename):
     rows = csv.reader(f)
     headers = next(rows)
 
-    for row in rows:
+    for lineno, row in enumerate(rows):
         try:
             name, shares, cost = row
             print(f"name: {name}, shares: {shares}, cost: {cost}")
             total_cost += (float(cost) * float(shares))
         except ValueError:
-            print("Missing field!") 
+            print(f"Row {lineno}: Couldn\'t convert: {row}")
 
 
     f.close()
