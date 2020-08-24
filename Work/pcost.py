@@ -1,4 +1,5 @@
 import csv
+import sys
 
 def portfolio_cost(filename):
     total_cost = 0
@@ -41,9 +42,17 @@ def portfolio_cost_csv_library(filename):
 # print(f"Total cost to purchase all of the shares: {cost}")
 
 
-cost = portfolio_cost_csv_library('Data/portfolio.csv')
-print(f"Total cost to purchase all of the shares: {cost}")
+# cost = portfolio_cost_csv_library('Data/portfolio.csv')
+# print(f"Total cost to purchase all of the shares: {cost}")
 
-cost = portfolio_cost_csv_library('Data/missing.csv')
-print(f"Total cost to purchase all of the shares: {cost}")
+# cost = portfolio_cost_csv_library('Data/missing.csv')
+# print(f"Total cost to purchase all of the shares: {cost}")
 
+
+if len(sys.argv) == 2:
+    filename = sys.argv[1]
+else:
+    filename = 'Data/portfolio.csv'
+
+cost = portfolio_cost_csv_library(filename)
+print(f"Total cost to purchase all of the shares: {cost}")
