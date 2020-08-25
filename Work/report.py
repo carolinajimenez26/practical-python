@@ -6,10 +6,11 @@ def read_portfolio(filename):
     f = open(filename)
     rows = csv.reader(f)
     headers = next(rows)
+    types = [str, int, float]
 
     for row in rows:
         try:
-            holding = dict(zip(headers, row))
+            holding = { name: func(val) for name, func, val in zip(headers, types, row) }
             portfolio.append(holding)
             # print(f"holding: {holding}")
         except ValueError:
@@ -22,10 +23,13 @@ def read_prices(filename):
     prices = {}
     f = open(filename)
     rows = csv.reader(f)
+    types = [str,float]
 
     for row in rows:
+        converted = [ func(val) for func, val in zip(types, row) ]
+        # print(converted)
         try:
-            prices[row[0]] = float(row[1])
+            prices[converted[0]] = converted[1]
             # print(f"prices[{row[0]}] = {prices[row[0]]}")
         except IndexError:
             pass
