@@ -1,23 +1,6 @@
 import csv
 import sys
-
-def read_portfolio(filename):
-    portfolio = []
-    f = open(filename)
-    rows = csv.reader(f)
-    headers = next(rows)
-    types = [str, int, float]
-
-    for row in rows:
-        try:
-            holding = { name: func(val) for name, func, val in zip(headers, types, row) }
-            portfolio.append(holding)
-            # print(f"holding: {holding}")
-        except ValueError:
-            pass
-
-    f.close()
-    return portfolio
+import fileparse
 
 def read_prices(filename):
     prices = {}
@@ -60,8 +43,8 @@ def print_report(report):
 
 
 def portfolio_report(portfolio_file_name, prices_file_name):
-    portfolio = read_portfolio(portfolio_file_name)
-    prices    = read_prices( prices_file_name)
+    portfolio = fileparse.parse_csv(portfolio_file_name, types=[str, int, float], has_headers=True)
+    prices    = dict(fileparse.parse_csv(prices_file_name, types=[str, float]))
 
     # Calculate the total cost of the portfolio
     total_cost = sum([int(s['shares']) * float(s['price']) for s in portfolio])
