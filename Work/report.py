@@ -49,24 +49,31 @@ def make_report(portfolio, prices):
     return report
 
 
+def print_report(report):
+    headers = ('Name', 'Shares', 'Price', 'Change')
+    print(f'{headers[0]:>10s} {headers[1]:>10s} {headers[2]:>10s} {headers[3]:>10s}')
+    print(f'{"":->10s} {"":->10s} {"":->10s} {"":->10s}')
 
-portfolio = read_portfolio('./Data/portfolio.csv')
-prices    = read_prices('./Data/prices.csv')
+    for name, shares, price, change in report:
+        s_price = '$' + f'{price:0.2f}'
+        print(f'{name:>10s} {shares:>10d} {s_price:>10s} {change:>10.2f}')
 
-# Calculate the total cost of the portfolio
-total_cost = sum([int(s['shares']) * float(s['price']) for s in portfolio])
-print('Total cost', total_cost)
 
-# Compute the current value of the portfolio
-total_value = sum([int(s['shares']) * float(prices[s['name']]) for s in portfolio])
-print('Current value', total_value)
-print('Gain', total_value - total_cost)
+def portfolio_report(portfolio_file_name, prices_file_name):
+    portfolio = read_portfolio(portfolio_file_name)
+    prices    = read_prices( prices_file_name)
 
-report = make_report(portfolio, prices)
-headers = ('Name', 'Shares', 'Price', 'Change')
-print(f'{headers[0]:>10s} {headers[1]:>10s} {headers[2]:>10s} {headers[3]:>10s}')
-print(f'{"":->10s} {"":->10s} {"":->10s} {"":->10s}')
+    # Calculate the total cost of the portfolio
+    total_cost = sum([int(s['shares']) * float(s['price']) for s in portfolio])
+    print('Total cost', total_cost)
 
-for name, shares, price, change in report:
-    s_price = '$' + f'{price:0.2f}'
-    print(f'{name:>10s} {shares:>10d} {s_price:>10s} {change:>10.2f}')
+    # Compute the current value of the portfolio
+    total_value = sum([int(s['shares']) * float(prices[s['name']]) for s in portfolio])
+    print('Current value', total_value)
+    print('Gain', total_value - total_cost)
+
+    report = make_report(portfolio, prices)
+    print_report(report)
+
+
+portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
