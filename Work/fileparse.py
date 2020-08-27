@@ -41,7 +41,7 @@ def parse_csv(filename, select = None, types = None, has_headers = False, delimi
     return records
 
 
-portfolio = parse_csv('Data/missing.csv', types=[str, int, float], has_headers=True, silence_errors=True)
+# portfolio = parse_csv('Data/missing.csv', types=[str, int, float], has_headers=True, silence_errors=True)
 # portfolio = parse_csv('Data/missing.csv', types=[str, int, float], has_headers=True)
 # parse_csv('Data/prices.csv', select=['name','price'], has_headers=False) # Raises an Exception
 # portfolio = parse_csv('Data/portfolio.dat', types=[str, int, float], has_headers=True, delimiter=' ')
@@ -49,4 +49,4 @@ portfolio = parse_csv('Data/missing.csv', types=[str, int, float], has_headers=T
 # portfolio = parse_csv('Data/portfolio.csv', select=['name', 'price'], types=[str, float], has_headers=True)
 # portfolio = parse_csv('Data/portfolio.csv', select=['name', 'prices'], types=[str, float])
 # portfolio = parse_csv('Data/portfolio.csv', select=['name', 'shares'], types=[str, int])
-print(portfolio)
+# print(portfolio)
