@@ -23,10 +23,15 @@ def print_report(report):
         print(f'{name:>10s} {shares:>10d} {s_price:>10s} {change:>10.2f}')
 
 
-def portfolio_report(portfolio_file_name, prices_file_name):
-    portfolio = fileparse.parse_csv(portfolio_file_name, types=[str, int, float], has_headers=True)
-    prices    = dict(fileparse.parse_csv(prices_file_name, types=[str, float]))
+def read_portfolio(portfolio_file_name):
+    return fileparse.parse_csv(portfolio_file_name, types=[str, int, float], has_headers=True)
 
+
+def read_prices(prices_file_name):
+    return dict(fileparse.parse_csv(prices_file_name, types=[str, float]))
+
+
+def portfolio_report(portfolio, prices):
     # Calculate the total cost of the portfolio
     total_cost = sum([s['shares'] * s['price'] for s in portfolio])
     print('Total cost', total_cost)
@@ -40,4 +45,4 @@ def portfolio_report(portfolio_file_name, prices_file_name):
     print_report(report)
 
 
-portfolio_report('Data/portfolio.csv', 'Data/prices.csv')
+portfolio_report(read_portfolio('Data/portfolio.csv'), read_prices('Data/prices.csv'))
