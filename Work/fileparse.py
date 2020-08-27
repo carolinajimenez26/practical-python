@@ -1,15 +1,17 @@
 import csv
 
-def parse_csv(filename, select = None, types = None, has_headers = False):
+def parse_csv(filename, select = None, types = None, has_headers = False, delimiter = ' '):
     '''
     Parse a CSV file into a list of records
     '''
     with open(filename) as f:
-        rows = csv.reader(f)
+        rows = csv.reader(f, delimiter=delimiter)
 
         # Read the file headers
-        if (has_headers): 
+        if has_headers: 
             headers = next(rows)
+            if not select:
+                select = headers
         
         records = []
 
@@ -17,7 +19,7 @@ def parse_csv(filename, select = None, types = None, has_headers = False):
             if not row:    # Skip rows with no data
                 continue
 
-            if (has_headers):
+            if has_headers:
                 record = {header: val for header_index, (header, val) in enumerate(zip(headers, row)) if header in select }
                 if types:
                     record = { key: func(record[key]) for func, key in zip(types, record) }
@@ -31,8 +33,9 @@ def parse_csv(filename, select = None, types = None, has_headers = False):
     return records
 
 
+portfolio = parse_csv('Data/portfolio.dat', types=[str, int, float], has_headers=True, delimiter=' ')
 # portfolio = parse_csv('Data/prices.csv', types=[str, float], has_headers=False)
-portfolio = parse_csv('Data/portfolio.csv', select=['name', 'price'], types=[str, float], has_headers=True)
+# portfolio = parse_csv('Data/portfolio.csv', select=['name', 'price'], types=[str, float], has_headers=True)
 # portfolio = parse_csv('Data/portfolio.csv', select=['name', 'prices'], types=[str, float])
 # portfolio = parse_csv('Data/portfolio.csv', select=['name', 'shares'], types=[str, int])
 print(portfolio)
